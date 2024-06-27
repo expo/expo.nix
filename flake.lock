@@ -1,0 +1,94 @@
+{
+  "nodes": {
+    "flake-compat": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1696426674,
+        "narHash": "sha256-kvjfFW7WAETZlt09AgDn1MrtKzP7t90Vf7vypd3OL1U=",
+        "owner": "edolstra",
+        "repo": "flake-compat",
+        "rev": "0f9255e01c2351cc7d116c072cb317785dd33b33",
+        "type": "github"
+      },
+      "original": {
+        "owner": "edolstra",
+        "repo": "flake-compat",
+        "type": "github"
+      }
+    },
+    "gcloud-nix": {
+      "locked": {
+        "lastModified": 1728584887,
+        "narHash": "sha256-CicrY1SGK2HIIFTcx2dc+yf1MyJQKRO0pA/fo9rGH/U=",
+        "owner": "nicknovitski",
+        "repo": "gcloud-nix",
+        "rev": "22132bbb074c02f72181d6b94168f323421c0af9",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nicknovitski",
+        "ref": "v1",
+        "repo": "gcloud-nix",
+        "type": "github"
+      }
+    },
+    "javascript-nix": {
+      "locked": {
+        "lastModified": 1729604173,
+        "narHash": "sha256-DUts5/oXspnab5bpAJJtkbL/sIm2Gj8WsesAUZQiKcY=",
+        "owner": "nicknovitski",
+        "repo": "javascript-nix",
+        "rev": "795a04ca8e8292185a6eafe7e0a7927e7c97fad7",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nicknovitski",
+        "repo": "javascript-nix",
+        "type": "github"
+      }
+    },
+    "make-shell": {
+      "inputs": {
+        "flake-compat": "flake-compat"
+      },
+      "locked": {
+        "lastModified": 1729528653,
+        "narHash": "sha256-bXso1pRcMxzJlEhfcDR/9oYOdkoXx/niNIMV4Y+FMmI=",
+        "owner": "nicknovitski",
+        "repo": "make-shell",
+        "rev": "dad639e47f32e66a3e080a249fc618086bd5cdeb",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nicknovitski",
+        "repo": "make-shell",
+        "type": "github"
+      }
+    },
+    "root": {
+      "inputs": {
+        "gcloud-nix": "gcloud-nix",
+        "javascript-nix": "javascript-nix",
+        "make-shell": "make-shell",
+        "update-flake": "update-flake"
+      }
+    },
+    "update-flake": {
+      "locked": {
+        "lastModified": 1720561575,
+        "narHash": "sha256-1kbWTsnIeSbfVCH1h/JlNUPHpmjEVIINXU5aVcteMW4=",
+        "owner": "nicknovitski",
+        "repo": "update-flake",
+        "rev": "45e05df9e6dc4200395ca37f27db8473197e7ea1",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nicknovitski",
+        "repo": "update-flake",
+        "type": "github"
+      }
+    }
+  },
+  "root": "root",
+  "version": 7
+}
