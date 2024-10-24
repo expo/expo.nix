@@ -38,6 +38,7 @@
   };
   # Install the yarn corepack shim wherever we install node directly
   javascript.node.corepack-shims = [ "yarn" ];
+  javascript.node.env = lib.mkDefault "development";
   # unset some environment variables we never want in shells
   env = {
     CONFIG_SHELL = null;

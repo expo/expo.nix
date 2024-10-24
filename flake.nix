@@ -1,6 +1,6 @@
 {
   inputs = {
-    javascript-nix.url = "github:nicknovitski/javascript-nix";
+    javascript-nix.url = "github:nicknovitski/javascript-nix/v1";
     make-shell.url = "github:nicknovitski/make-shell";
     update-flake.url = "github:nicknovitski/update-flake";
     gcloud-nix.url = "github:nicknovitski/gcloud-nix/v1";

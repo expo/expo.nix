@@ -34,15 +34,16 @@
     },
     "javascript-nix": {
       "locked": {
-        "lastModified": 1729604173,
-        "narHash": "sha256-DUts5/oXspnab5bpAJJtkbL/sIm2Gj8WsesAUZQiKcY=",
+        "lastModified": 1729789876,
+        "narHash": "sha256-c4wfYvxndV/gOhW+zlCNP2sGE+xImqmQg3oyumSi2cY=",
         "owner": "nicknovitski",
         "repo": "javascript-nix",
-        "rev": "795a04ca8e8292185a6eafe7e0a7927e7c97fad7",
+        "rev": "4524e28ff3a1624480d2ece2397ca9262d70cef8",
         "type": "github"
       },
       "original": {
         "owner": "nicknovitski",
+        "ref": "v1",
         "repo": "javascript-nix",
         "type": "github"
       }
