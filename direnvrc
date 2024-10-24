@@ -14,35 +14,27 @@ EOM
 	ready=false
 fi
 
-if ! has nix; then
-	# These are the lines the nix installer would normally add to people's
-	# shell profiles.  If people install nix without making changes to
-	# their profiles, the nix cli won't be present in their PATH until we
-	# do this.
-	if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
-		unstrict_env . '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
-	fi
-	# If nix still isn't in PATH after that, mark unready
-	if ! has nix; then
-		log_error Nix installation not detected
-		cat <<EOM
-You must have Nix installed on your computer before tools can be installed.
-Install instructions at https://nixos.org/download/
-EOM
-		ready=false
-	fi
+# These are the lines the nix installer would normally add to people's shell
+# profiles.  If people install nix without making changes to their profiles,
+# the nix cli won't be present in their PATH until we do this.
+if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
+	unstrict_env . '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
 fi
 
-ndv=3.0.6
-if ! has nix_direnv_version || ! nix_direnv_version "$ndv"; then
-	source_url "https://raw.githubusercontent.com/nix-community/nix-direnv/$ndv/direnvrc" "sha256-RYcUJaRMf8oF5LznDrlCXbkOQrywm0HDv1VjYGaJGdM="
-fi
-nix_direnv_manual_reload
+if has nix; then
+	ndv=3.0.6
+	if ! has nix_direnv_version || ! nix_direnv_version "$ndv"; then
+		source_url "https://raw.githubusercontent.com/nix-community/nix-direnv/$ndv/direnvrc" "sha256-RYcUJaRMf8oF5LznDrlCXbkOQrywm0HDv1VjYGaJGdM="
+	fi
+	nix_direnv_manual_reload
 
-NIX_CONFIG="warn-dirty = false
-experimental-features = nix-command flakes
-"
-export NIX_CONFIG
+	NIX_CONFIG="warn-dirty = false
+  experimental-features = nix-command flakes
+  "
+	export NIX_CONFIG
+else
+	log_status "Nix installation not detected (https://nixos.org/download/)"
+fi
 
 if ! "$ready"; then
 	log_error "Development environment cannot be loaded. Fix errors above and run 'direnv reload' to retry."
