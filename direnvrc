@@ -2,41 +2,45 @@
 
 strict_env
 
-ready=true
+if [ -n "${CI:-}" ]; then
+	log_status "CI environment variable set, skipping"
+else
+	ready=true
 
-if has fdesetup && [ "$(fdesetup isactive)" != true ]; then
-	log_error FileVault encryption not active
-	cat <<EOM
+	if has fdesetup && [ "$(fdesetup isactive)" != true ]; then
+		log_error FileVault encryption not active
+		cat <<EOM
 You must have FileVault's full-disk encryption active before downloading secret credentials to your computer. Read this guide to learn how to enable FileVault: https://support.apple.com/en-us/HT204837.
 
 Thank you for helping keep Expo secure.
 EOM
-	ready=false
-fi
-
-# These are the lines the nix installer would normally add to people's shell
-# profiles.  If people install nix without making changes to their profiles,
-# the nix cli won't be present in their PATH until we do this.
-if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
-	unstrict_env . '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
-fi
-
-if has nix; then
-	ndv=3.0.6
-	if ! has nix_direnv_version || ! nix_direnv_version "$ndv"; then
-		source_url "https://raw.githubusercontent.com/nix-community/nix-direnv/$ndv/direnvrc" "sha256-RYcUJaRMf8oF5LznDrlCXbkOQrywm0HDv1VjYGaJGdM="
+		ready=false
 	fi
-	nix_direnv_manual_reload
 
-	NIX_CONFIG="warn-dirty = false
+	# These are the lines the nix installer would normally add to people's shell
+	# profiles.  If people install nix without making changes to their profiles,
+	# the nix cli won't be present in their PATH until we do this.
+	if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
+		unstrict_env . '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
+	fi
+
+	if has nix; then
+		ndv=3.0.6
+		if ! has nix_direnv_version || ! nix_direnv_version "$ndv"; then
+			source_url "https://raw.githubusercontent.com/nix-community/nix-direnv/$ndv/direnvrc" "sha256-RYcUJaRMf8oF5LznDrlCXbkOQrywm0HDv1VjYGaJGdM="
+		fi
+		nix_direnv_manual_reload
+
+		NIX_CONFIG="warn-dirty = false
   experimental-features = nix-command flakes
   "
-	export NIX_CONFIG
-else
-	log_status "Nix installation not detected (https://nixos.org/download/)"
-fi
+		export NIX_CONFIG
+	else
+		log_status "Nix installation not detected (https://nixos.org/download/)"
+	fi
 
-if ! "$ready"; then
-	log_error "Development environment cannot be loaded. Fix errors above and run 'direnv reload' to retry."
-	exit 0
+	if ! "$ready"; then
+		log_error "Development environment cannot be loaded. Fix errors above and run 'direnv reload' to retry."
+		exit 0
+	fi
 fi
