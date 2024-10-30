@@ -9,6 +9,7 @@
     ./aliases.nix
     ./aws.nix
     ./direnv.nix
+    ./dotenv.nix
     ./k8s.nix
     ./gcloud.nix
     ./interactive.nix
