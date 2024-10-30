@@ -8,6 +8,7 @@
   imports = [
     ./aliases.nix
     ./aws.nix
+    ./direnv.nix
     ./k8s.nix
     ./gcloud.nix
     ./interactive.nix
