@@ -53,11 +53,11 @@
         "flake-compat": "flake-compat"
       },
       "locked": {
-        "lastModified": 1729528653,
-        "narHash": "sha256-bXso1pRcMxzJlEhfcDR/9oYOdkoXx/niNIMV4Y+FMmI=",
+        "lastModified": 1731391731,
+        "narHash": "sha256-5XOfn5gZCngyOAOpTdEzkbS/xBgdnjaG5YH15rioDmI=",
         "owner": "nicknovitski",
         "repo": "make-shell",
-        "rev": "dad639e47f32e66a3e080a249fc618086bd5cdeb",
+        "rev": "6c5aedcc79aad0ae98cad1b784e8336eff488300",
         "type": "github"
       },
       "original": {
@@ -71,7 +71,8 @@
         "gcloud-nix": "gcloud-nix",
         "javascript-nix": "javascript-nix",
         "make-shell": "make-shell",
-        "update-flake": "update-flake"
+        "update-flake": "update-flake",
+        "ypn": "ypn"
       }
     },
     "update-flake": {
@@ -86,6 +87,23 @@
       "original": {
         "owner": "nicknovitski",
         "repo": "update-flake",
+        "type": "github"
+      }
+    },
+    "ypn": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1732751637,
+        "narHash": "sha256-5qZfh/lAVeSOZ8szrLIGVq524v9gaKLoKCCBah02mhE=",
+        "owner": "nicknovitski",
+        "repo": "yarn-plugin-nixify",
+        "rev": "8e908f6bdb53eb6463bb8a377bc0ae8d4c8ee78b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nicknovitski",
+        "ref": "plugins-arg",
+        "repo": "yarn-plugin-nixify",
         "type": "github"
       }
     }

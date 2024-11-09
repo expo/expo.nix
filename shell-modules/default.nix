@@ -1,7 +1,6 @@
 {
   pkgs,
   lib,
-  config,
   ...
 }:
 {
@@ -15,6 +14,7 @@
     ./k8s.nix
     ./skaffold.nix
     ./tf.nix
+    ./yarn-nixify.nix
   ];
   stdenv = pkgs.stdenvNoCC; # Don't include a C compiler in our shells
   # Utilities we've decided to have everywhere

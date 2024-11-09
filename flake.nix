@@ -48,17 +48,30 @@
               ];
               # create update-flake package
               update.enable = true;
-              # Permit installing certain packages with unfree software licenses
               _module.args.pkgs = import inputs.nixpkgs {
                 inherit system;
-                config = {
-                  allowUnfreePredicate =
-                    pkg:
-                    builtins.elem (lib.getName pkg) [
-                      "graphite-cli"
-                      "terraform"
-                    ];
-                };
+                # Permit installing certain packages with unfree software licenses
+                config.allowUnfreePredicate =
+                  pkg:
+                  builtins.elem (lib.getName pkg) [
+                    "graphite-cli"
+                    "terraform"
+                  ];
+                overlays = [
+                  (final: prev: {
+                    lib = prev.lib.recursiveUpdate prev.lib {
+                      fileset =
+                        let
+                          fs = prev.lib.fileset;
+                        in
+                        {
+                          byRegex = root: regexes: fs.fromSource (prev.lib.sources.sourceByRegex root regexes);
+                          excludeByRegex = root: excludes: fs.difference root (final.lib.fileset.byRegex root excludes);
+                        };
+
+                    };
+                  })
+                ];
               };
               # enable `nix fmt` command
               formatter = pkgs.nixfmt-rfc-style;
