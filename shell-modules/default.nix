@@ -45,6 +45,7 @@
   env = {
     CONFIG_SHELL = null;
     DETERMINISTIC_BUILD = null;
+    DEVELOPER_DIR = null;
     HOST_PATH = null;
     MACOSX_DEPLOYMENT_TARGET = null;
     NIX_BUILD_CORES = null;
