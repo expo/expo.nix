@@ -10,9 +10,10 @@
     ./aws.nix
     ./direnv.nix
     ./dotenv.nix
-    ./k8s.nix
     ./gcloud.nix
     ./interactive.nix
+    ./k8s.nix
+    ./skaffold.nix
     ./tf.nix
   ];
   stdenv = pkgs.stdenvNoCC; # Don't include a C compiler in our shells
