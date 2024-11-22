@@ -11,9 +11,7 @@
       options.expo.skaffold.enable = lib.mkEnableOption "skaffold project";
       config = lib.mkIf config.expo.skaffold.enable {
         # Add skaffold to default devShell
-        make-shells.default = {
-          packages = [ pkgs.skaffold ];
-        };
+        make-shells.default.expo.skaffold.enable = true;
         # Update skaffold.yaml with new skaffold version whenever the flake is updated
         update.after.bash = "nix run ./#skaffold-fix";
         packages.skaffold-fix = pkgs.writeShellApplication {
