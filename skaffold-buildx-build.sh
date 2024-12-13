@@ -6,19 +6,32 @@
 # docker images, and works on Apple Silicon via rosetta.
 PLATFORMS=${PLATFORMS:-linux/amd64}
 
-# `docker buildx build` requires a builder instance, and builder instances also
-# have a platform.  For each value of PLATFORMS, we create or re-use
-# a builder instance.
+# `docker buildx build` requires a builder instance.  Builder instances have an
+# associated set of platforms, and a context.  Therefore, we create or re-use a
+# builder for each combination of those things
 # REF: https://docs.docker.com/reference/cli/docker/buildx/create/
+
+if [[ -n "${MINIKUBE_ACTIVE_DOCKERD:-}" ]]; then
+  context=minikube
+  echo "Deploying to a minikube cluster, using '$context' docker context"
+  # Since minikube instances can change without this context changing, it must
+  # be kept up-to-date, and the simplest way to do that is by always
+  # re-creating it.
+  docker context rm $context &> /dev/null || echo "'$context' docker context not found, creating it"
+  docker context create $context &> /dev/null
+else
+  context=$(docker context show)
+fi
 
 # PLATFORMS can have `/` and `,` characters in it, but builder names can't.
 # This shell expansion replaces those with `-` characters
-builder="skaffold-${PLATFORMS//[,\/]/-}"
+builder="skaffold-${PLATFORMS//[,\/]/-}-$context"
+
 if docker buildx inspect "$builder" >/dev/null 2>&1; then
   echo "Using existing builder $builder"
 else
   echo "Creating builder $builder"
-  docker buildx create --name "$builder" --platform "$PLATFORMS"
+  docker buildx create --name "$builder" --platform "$PLATFORMS" --use "$context"
 fi
 
 if [ "$PUSH_IMAGE" = "true" ]; then
