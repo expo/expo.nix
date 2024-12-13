@@ -26,8 +26,10 @@ in
     ];
     gcloud.enable = true;
     gcloud.extra-components = [ "gke-gcloud-auth-plugin" ];
-    interactiveShellHook = lib.optionalString (
-      cfg.cluster != null
-    ) "gcloud container clusters get-credentials ${cfg.cluster} --region ${cfg.region}";
+    interactiveShellHook = lib.optionalString (cfg.cluster != null) ''
+      kubectlContext="$(kubectl config current-context)"
+      gcloud container clusters get-credentials ${cfg.cluster} --region ${cfg.region}
+      kubectl config use "$kubectlContext"
+    '';
   };
 }
