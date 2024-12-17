@@ -49,15 +49,6 @@ if [[ "$IMAGE" == */* ]]; then
   # `gcr.io/aProjectName/aRepositoryName/image-name:tag` -> `gcr.io`
   gcloud auth configure-docker "${IMAGE%%/*}"
 
-  # For each image repository, create a cache repository
-  CACHE_REPO="$IMAGE_REPO-cache"
-
-  # Write and read a cache for this exact image tag.
-  # NOTE: With the skaffold tagging strategy `sha256`, IMAGE_TAG will always be
-  # `latest`, which makes these arguments less useful.
-  TAG_CACHE_IMAGE="$CACHE_REPO:$IMAGE_TAG"
-  args+=(--cache-from="type=registry,ref=$TAG_CACHE_IMAGE" --cache-to="mode=max,image-manifest=true,oci-mediatypes=true,type=registry,ref=$TAG_CACHE_IMAGE")
-
   # We want valid image tag that's consistent for a given git branch or ref
   # name, but many characters are allowed in ref names that aren't in image
   # tags, so we run it through MD5.
@@ -68,13 +59,13 @@ if [[ "$IMAGE" == */* ]]; then
   # Write and read a cache for this branch or pull request
   # NOTE: in PRs, GITHUB_REF_NAME will be "<pr_number>/merge"
   if [ -n "${GITHUB_REF_NAME:-}" ]; then
-    BRANCH_CACHE_IMAGE="$CACHE_REPO:$(cacheTag "$GITHUB_REF_NAME")"
+    BRANCH_CACHE_IMAGE="$IMAGE_REPO:cache-$(cacheTag "$GITHUB_REF_NAME")"
     args+=(--cache-from="type=registry,ref=$BRANCH_CACHE_IMAGE" --cache-to="mode=max,image-manifest=true,oci-mediatypes=true,type=registry,ref=$BRANCH_CACHE_IMAGE")
   fi
 
   # As a fall-back, read a cache from the `main` branch.
   if [ "${GITHUB_REF_NAME:-}" != "main" ]; then
-    args+=(--cache-from="type=registry,ref=$CACHE_REPO:$(cacheTag main)")
+    args+=(--cache-from="type=registry,ref=$IMAGE_REPO:cache-$(cacheTag main)")
   fi
 fi
 
