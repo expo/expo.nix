@@ -22,6 +22,7 @@ in
   config = lib.mkIf cfg.enable {
     packages = [
       pkgs.kubectl
+      pkgs.kubernetes-helm # Used to install some apps to minikube clusters
       pkgs.minikube
     ];
     gcloud.enable = true;
