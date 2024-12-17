@@ -13,7 +13,7 @@
         name = "skaffold-buildx-build";
         runtimeInputs = [
           pkgs.coreutils
-          pkgs.docker-client
+          pkgs.docker-buildx
           pkgs.google-cloud-sdk
           pkgs.jq
         ];
