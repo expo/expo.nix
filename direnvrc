@@ -25,10 +25,7 @@ EOM
 	fi
 
 	if has nix; then
-		ndv=3.0.6
-		if ! has nix_direnv_version || ! nix_direnv_version "$ndv"; then
-			source_url "https://raw.githubusercontent.com/nix-community/nix-direnv/$ndv/direnvrc" "sha256-RYcUJaRMf8oF5LznDrlCXbkOQrywm0HDv1VjYGaJGdM="
-		fi
+		source_url "https://raw.githubusercontent.com/nix-community/nix-direnv/0357fa09ff68323c472fc0362ddc141a6aa6c3b5/direnvrc" "sha256-RoBVZbAvCb+XYPf2O/jqH64P+hAz55vlUz+cmFNHdDg="
 		nix_direnv_manual_reload
 
 		NIX_CONFIG="warn-dirty = false
