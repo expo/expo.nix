@@ -60,7 +60,10 @@ if [[ "$IMAGE" == */* ]]; then
   # NOTE: in PRs, GITHUB_REF_NAME will be "<pr_number>/merge"
   if [ -n "${GITHUB_REF_NAME:-}" ]; then
     BRANCH_CACHE_IMAGE="$IMAGE_REPO:cache-$(cacheTag "$GITHUB_REF_NAME")"
-    args+=(--cache-from="type=registry,ref=$BRANCH_CACHE_IMAGE" --cache-to="mode=max,image-manifest=true,oci-mediatypes=true,type=registry,ref=$BRANCH_CACHE_IMAGE")
+    args+=(--cache-from="type=registry,ref=$BRANCH_CACHE_IMAGE")
+    if [ "$PUSH_IMAGE" = "true" ]; then
+      args+=(--cache-to="mode=max,image-manifest=true,oci-mediatypes=true,type=registry,ref=$BRANCH_CACHE_IMAGE")
+    fi
   fi
 
   # As a fall-back, read a cache from the `main` branch.
