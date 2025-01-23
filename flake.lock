@@ -71,8 +71,7 @@
         "gcloud-nix": "gcloud-nix",
         "javascript-nix": "javascript-nix",
         "make-shell": "make-shell",
-        "update-flake": "update-flake",
-        "ypn": "ypn"
+        "update-flake": "update-flake"
       }
     },
     "update-flake": {
@@ -87,23 +86,6 @@
       "original": {
         "owner": "nicknovitski",
         "repo": "update-flake",
-        "type": "github"
-      }
-    },
-    "ypn": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1732751637,
-        "narHash": "sha256-5qZfh/lAVeSOZ8szrLIGVq524v9gaKLoKCCBah02mhE=",
-        "owner": "nicknovitski",
-        "repo": "yarn-plugin-nixify",
-        "rev": "8e908f6bdb53eb6463bb8a377bc0ae8d4c8ee78b",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nicknovitski",
-        "ref": "plugins-arg",
-        "repo": "yarn-plugin-nixify",
         "type": "github"
       }
     }
