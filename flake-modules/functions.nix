@@ -27,6 +27,7 @@
                       types.nonEmptyStr
                       types.bool
                       types.path
+                      (types.listOf types.nonEmptyStr)
                     ]
                   );
                 };
@@ -59,18 +60,20 @@
                     mergedFlags = flags // {
                       inherit source runtime project;
                     };
-                    flagToString =
+                  in
+                  {
+                    inherit functionName;
+                    deployFlags = lib.flatten (lib.mapAttrsToList (
                       flag: value:
-                      if value == true then
+                      if lib.isList value then
+                        map (v: "--${flag}=${v}") value
+                      else if value == true then
                         "--${flag}"
                       else if value == false then
                         "--no-${flag}"
                       else
-                        "--${flag}=${value}";
-                  in
-                  {
-                    inherit functionName;
-                    deployFlags = lib.mapAttrsToList flagToString mergedFlags;
+                        "--${flag}=${value}"
+                    ) mergedFlags);
                     outPath = builtins.placeholder "out";
                   };
                 text = builtins.readFile ../deploy-function.bash;

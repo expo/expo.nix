@@ -68,6 +68,7 @@
                                   types.nonEmptyStr
                                   types.bool
                                   types.path
+                                  (types.listOf types.nonEmptyStr)
                                 ]
                               );
                             };
