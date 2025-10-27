@@ -1,8 +1,4 @@
-{
-  lib,
-  config,
-  ...
-}:
+{ lib, config, ... }:
 let
   inherit (lib) types;
   cfg = config.gcloud;
@@ -24,9 +20,7 @@ in
       type = types.attrsOf (
         types.submodule {
           options = {
-            version = lib.mkOption {
-              type = types.int;
-            };
+            version = lib.mkOption { type = types.int; };
           };
         }
       );
@@ -56,7 +50,8 @@ in
           name: value: ''export ${name}="${builtins.toString value}"''
         ) cfg.overrideEnv;
       in
-      (builtins.readFile ./external-secrets.bash) + lib.concatStringsSep "\n" (sourceLines ++ overrideExports);
+      (builtins.readFile ./external-secrets.bash)
+      + lib.concatStringsSep "\n" (sourceLines ++ overrideExports);
     interactiveShellHook = ''
       gcloudAccount=$(gcloud auth list --filter=status:ACTIVE --format="value(account)")
       if [ -z ''${gcloudAccount:+set} ]; then

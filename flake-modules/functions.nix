@@ -63,17 +63,19 @@
                   in
                   {
                     inherit functionName;
-                    deployFlags = lib.flatten (lib.mapAttrsToList (
-                      flag: value:
-                      if lib.isList value then
-                        map (v: "--${flag}=${v}") value
-                      else if value == true then
-                        "--${flag}"
-                      else if value == false then
-                        "--no-${flag}"
-                      else
-                        "--${flag}=${value}"
-                    ) mergedFlags);
+                    deployFlags = lib.flatten (
+                      lib.mapAttrsToList (
+                        flag: value:
+                        if lib.isList value then
+                          map (v: "--${flag}=${v}") value
+                        else if value == true then
+                          "--${flag}"
+                        else if value == false then
+                          "--no-${flag}"
+                        else
+                          "--${flag}=${value}"
+                      ) mergedFlags
+                    );
                     outPath = builtins.placeholder "out";
                   };
                 text = builtins.readFile ../deploy-function.bash;

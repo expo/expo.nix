@@ -2,6 +2,7 @@
   inputs = {
     javascript-nix.url = "github:nicknovitski/javascript-nix/v1";
     make-shell.url = "github:nicknovitski/make-shell";
+    treefmt-nix.url = "github:numtide/treefmt-nix";
     update-flake.url = "github:nicknovitski/update-flake";
     gcloud-nix.url = "github:nicknovitski/gcloud-nix/v1";
   };
@@ -12,19 +13,17 @@
       javascript-nix,
       make-shell,
       update-flake,
+      treefmt-nix,
       ...
     }:
     {
       flakeModules.default =
-        {
-          inputs,
-          lib,
-          ...
-        }:
+        { inputs, lib, ... }:
         {
           imports = [
             make-shell.flakeModules.default
             update-flake.flakeModules.default
+            treefmt-nix.flakeModule
             ./flake-modules
           ];
           # Default supported systems
@@ -34,11 +33,7 @@
             "x86_64-linux" # Cloud Services
           ];
           perSystem =
-            {
-              pkgs,
-              system,
-              ...
-            }:
+            { system, ... }:
             {
               # add expo options and defaults to all shells
               make-shell.imports = [
@@ -73,8 +68,6 @@
                   })
                 ];
               };
-              # enable `nix fmt` command
-              formatter = pkgs.nixfmt-rfc-style;
             };
         };
     };

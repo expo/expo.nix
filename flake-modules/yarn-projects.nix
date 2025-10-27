@@ -112,9 +112,7 @@
           ...
         }:
         let
-          project = pkgs.callPackage (root + "/yarn-project.nix") {
-            inherit nodejs;
-          };
+          project = pkgs.callPackage (root + "/yarn-project.nix") { inherit nodejs; };
           fs = lib.fileset;
           fileset = fs.unions (
             files
@@ -126,9 +124,7 @@
             ]
           );
           package = project {
-            src = fs.toSource {
-              inherit root fileset;
-            };
+            src = fs.toSource { inherit root fileset; };
             overrideAttrs = package-attributes;
           };
           devPackage = project {
