@@ -12,12 +12,18 @@
       config = lib.mkIf config.expo.skaffold.enable {
         # Add skaffold to default devShell
         make-shells.default.expo.skaffold.enable = true;
-        # Update skaffold.yaml with new skaffold version whenever the flake is updated
-        update.after.bash = "nix run ./#skaffold-fix";
-        packages.skaffold-fix = pkgs.writeShellApplication {
-          name = "skaffold-fix";
-          runtimeInputs = [ pkgs.skaffold ];
-          text = "skaffold fix --output skaffold.yaml";
+        treefmt.settings.formatter.skaffold-fix = {
+          command = "${pkgs.bash}/bin/bash";
+          options = [
+            "-euc"
+            ''
+              for file in "$@"; do
+                ${pkgs.skaffold}/bin/skaffold fix --filename "$file" --output "$file"
+              done
+            ''
+            "--" # bash swallows the second argument when using -c
+          ];
+          includes = [ "skaffold.yaml" ];
         };
       };
     }

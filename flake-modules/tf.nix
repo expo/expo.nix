@@ -30,10 +30,9 @@
             done
           '';
         };
+        treefmt.programs.terraform.enable = true;
         # See shell-modules/tf.nix
-        make-shells.default = {
-          expo.tf.enable = true;
-        };
+        make-shells.default.expo.tf.enable = true;
       };
     }
   );
