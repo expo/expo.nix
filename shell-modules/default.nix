@@ -26,7 +26,7 @@
     pkgs.shellcheck
     pkgs.shfmt
     pkgs.yamlfmt
-    pkgs.yq
+    pkgs.yq-go
   ];
   # shellcheck all our bash code
   additionalArguments = {
